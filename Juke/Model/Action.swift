@@ -8,7 +8,12 @@
 import Foundation
 import Combine
 
-class Action<Input, Success, Failure: Error>: ObservableObject {
+protocol ActionType {
+    associatedtype Success
+    var success: AnyPublisher<Success, Never> { get }
+}
+
+class Action<Input, Success, Failure: Error>: ObservableObject, ActionType {
     @Published private(set) var isExecuting = false
     private let successSubject = PassthroughSubject<Success, Never>()
     private let errorSubject = PassthroughSubject<Failure, Never>()

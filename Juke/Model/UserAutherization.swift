@@ -18,22 +18,22 @@ struct User {
     }
 }
 
-class UserAutherization: ObservableObject {
+class UserAutherization: Store<UserAutherization.State> {
     struct State {
         var user: User?
     }
     
-    @Published private(set) var state = State()
-    
-    private var sub = [AnyCancellable]()
-    
     init() {
-        UserAuthStateListener.shared.success.sink { [weak self] user in
-            self?.state.user = user
-        }.store(in: &sub)
-        SignInAction.shared.success.sink { [weak self] user in
-            self?.state.user = user
-        }.store(in: &sub)
+        super.init(State())
+        watch(UserAuthStateListener.shared) { state, user in
+            state.user = user
+        }
+        watch(SignInAction.shared) { state, user in
+            state.user = user
+        }
+        watch(SignOutAction.shared) { state, _ in
+            state.user = nil
+        }
     }
 }
 
