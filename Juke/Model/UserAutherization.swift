@@ -12,6 +12,10 @@ import Combine
 struct User {
     var uid: String
     var isAnonymous: Bool
+    
+    static func from(firebaseUser: FirebaseAuth.User) -> User {
+        User(uid: firebaseUser.uid, isAnonymous: firebaseUser.isAnonymous)
+    }
 }
 
 class UserAutherization: ObservableObject {
@@ -45,8 +49,23 @@ class SignInAction: Action<(), User, Error> {
                     return
                 }
                 if let user = result?.user {
-                    completion(.success(User(uid: user.uid, isAnonymous: user.isAnonymous)))
+                    completion(.success(User.from(firebaseUser: user)))
                 }
+            }
+        }
+    }
+}
+
+class SignOutAction: Action<(), (), Error> {
+    static let shared = SignOutAction()
+    
+    init() {
+        super.init { _ in
+            do {
+                try Auth.auth().signOut()
+                return .success(())
+            } catch (let err) {
+                return .failure(err)
             }
         }
     }
@@ -58,9 +77,7 @@ class UserAuthStateListener: Action<(), User?, Never> {
     init() {
         super.init { _, completion in
             Auth.auth().addStateDidChangeListener { _, user in
-                completion(.success(user.flatMap({ u in
-                    User(uid: u.uid, isAnonymous: u.isAnonymous)
-                })))
+                completion(.success(user.flatMap(User.from(firebaseUser:))))
             }
         }
     }

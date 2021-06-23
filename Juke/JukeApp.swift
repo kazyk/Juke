@@ -19,7 +19,10 @@ struct JukeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(userAuthorization)
+            ContentView()
+                .environmentObject(userAuthorization)
+                .environmentObject(SignInAction.shared)
+                .environmentObject(SignOutAction.shared)
         }
     }
 }
