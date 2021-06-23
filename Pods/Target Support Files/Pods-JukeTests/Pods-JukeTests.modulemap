@@ -1,0 +1,6 @@
+framework module Pods_JukeTests {
+  umbrella header "Pods-JukeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
