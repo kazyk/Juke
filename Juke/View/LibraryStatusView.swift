@@ -12,17 +12,17 @@ struct LibraryStatusView: View {
     
     var body: some View {
         HStack {
-        switch status {
-        case .notDetermined:
-            Text("No Access")
-            ActionButton(actionType: RequestLibraryAuthorizationAction.self) { action in
-                Button("Request Access", action: action)
+            Text("Library Access:")
+            switch status {
+            case .notDetermined:
+                ActionButton(actionType: RequestLibraryAuthorizationAction.self) { action in
+                    Button("Request Access", action: action)
+                }
+            case .denied:
+                Text("Denied")
+            case .authorized:
+                Text("Granted")
             }
-        case .denied:
-            Text("Access Denied")
-        case .authorized:
-            Text("Access Granted")
-        }
         }
     }
 }

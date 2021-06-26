@@ -9,6 +9,6 @@ import Foundation
 import Combine
 
 protocol Service {
-    associatedtype Value
-    var publisher: AnyPublisher<Value, Never> { get }
+    associatedtype Publisher: Combine.Publisher where Publisher.Failure == Never
+    var publisher: Publisher { get }
 }

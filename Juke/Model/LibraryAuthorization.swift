@@ -53,9 +53,7 @@ final class RequestLibraryAuthorizationAction: Action<(), LibraryAuthorization.S
 }
 
 final class LibraryAuthorizationStatus: Service {
-    var publisher: AnyPublisher<LibraryAuthorization.Status, Never> {
-        Deferred {
-            Just(LibraryAuthorization.Status(MPMediaLibrary.authorizationStatus()))
-        }.eraseToAnyPublisher()
+    let publisher = Deferred {
+        Just(LibraryAuthorization.Status(MPMediaLibrary.authorizationStatus()))
     }
 }

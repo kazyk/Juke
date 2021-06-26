@@ -26,12 +26,13 @@ class Store<T>: ObservableObject {
         }.store(in: &sub)
     }
     
-    func watch<S: Service>(_ service: S, handler: @escaping (inout T, S.Value) -> Void) {
-        service.publisher.sink { [weak self] value in
-            guard let self = self else {
-                return
-            }
-            handler(&self.state, value)
-        }.store(in: &sub)
+    func watch<S: Service>(_ service: S, handler: @escaping (inout T, S.Publisher.Output) -> Void) {
+        service.publisher
+            .sink { [weak self] value in
+                guard let self = self else {
+                    return
+                }
+                handler(&self.state, value)
+            }.store(in: &sub)
     }
 }
