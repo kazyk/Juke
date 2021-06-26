@@ -67,12 +67,20 @@ class SignOutAction: Action<(), (), Error> {
     }
 }
 
-class UserAuthStateListener: Action<(), User?, Never> {
-    init() {
-        super.init { _, completion in
-            Auth.auth().addStateDidChangeListener { _, user in
-                completion(.success(user.flatMap(User.from(firebaseUser:))))
+class UserAuthStateListener: Service {
+    private(set) lazy var publisher: AnyPublisher<User?, Never> = {
+        let def = Deferred { () -> AnyPublisher<User?, Never> in
+            let subject = PassthroughSubject<User?, Never>()
+            let auth = Auth.auth()
+            let listener = auth.addStateDidChangeListener { _, user in
+                subject.send(user.flatMap(User.from(firebaseUser:)))
             }
+            return subject
+                .handleEvents(receiveCancel: {
+                    auth.removeStateDidChangeListener(listener)
+                })
+                .eraseToAnyPublisher()
         }
-    }
+        return def.share().eraseToAnyPublisher()
+    }()
 }

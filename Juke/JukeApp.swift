@@ -14,7 +14,6 @@ struct JukeApp: App {
     
     init() {
         FirebaseApp.configure()
-        context.userAuthStateListener.execute()
     }
     
     var body: some Scene {
