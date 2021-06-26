@@ -24,7 +24,9 @@ struct AuthStatusView: View {
                     Button("Sign Out", action: action)
                 }
             case .some(_):
-                EmptyView()
+                ActionButton(actionType: SignOutAction.self) { action in
+                    Button("Sign Out", action: action)
+                }
             }
         }
     }

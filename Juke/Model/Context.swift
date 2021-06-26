@@ -10,6 +10,7 @@ import Foundation
 class Context {
     let signInAction = SignInAction()
     let signOutAction = SignOutAction()
+    let requestLibraryAuthorizationAction = RequestLibraryAuthorizationAction()
     
     let userAuthStateListener = UserAuthStateListener()
     let libraryAuthorizationStatus = LibraryAuthorizationStatus()

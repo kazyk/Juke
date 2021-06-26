@@ -9,11 +9,13 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var userAuth: UserAutherization
+    @EnvironmentObject private var libraryAuth: LibraryAuthorization
     
     var body: some View {
         NavigationView {
-            HStack {
+            VStack {
                 AuthStatusView(user: userAuth.state.user)
+                LibraryStatusView(status: libraryAuth.state.status)
             }
         }
     }

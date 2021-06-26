@@ -36,6 +36,9 @@ final class LibraryAuthorization: Store<LibraryAuthorization.State> {
         watch(context.libraryAuthorizationStatus) { state, status in
             state.status = status
         }
+        watch(context.requestLibraryAuthorizationAction) { state, status in
+            state.status = status
+        }
     }
 }
 

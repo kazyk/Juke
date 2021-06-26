@@ -21,7 +21,9 @@ struct JukeApp: App {
             ContentView()
                 .environmentObject(context.signInAction)
                 .environmentObject(context.signOutAction)
+                .environmentObject(context.requestLibraryAuthorizationAction)
                 .environmentObject(context.userAuthorization)
+                .environmentObject(context.libraryAuthorization)
         }
     }
 }
