@@ -52,7 +52,7 @@ struct AuthStatusView_Previews: PreviewProvider {
             AuthStatusView(user: nil)
             AuthStatusView(user: User(uid: "", isAnonymous: true))
             AuthStatusView(user: User(uid: "", isAnonymous: false))
-        }.environmentObject(SignInAction.shared)
-        .environmentObject(SignOutAction.shared)
+        }.environmentObject(SignInAction())
+        .environmentObject(SignOutAction())
     }
 }

@@ -23,15 +23,15 @@ class UserAutherization: Store<UserAutherization.State> {
         var user: User?
     }
     
-    init() {
+    init(context: Context) {
         super.init(State())
-        watch(UserAuthStateListener.shared) { state, user in
+        watch(context.userAuthStateListener) { state, user in
             state.user = user
         }
-        watch(SignInAction.shared) { state, user in
+        watch(context.signInAction) { state, user in
             state.user = user
         }
-        watch(SignOutAction.shared) { state, _ in
+        watch(context.signOutAction) { state, _ in
             state.user = nil
         }
     }
@@ -39,8 +39,6 @@ class UserAutherization: Store<UserAutherization.State> {
 
 
 class SignInAction: Action<(), User, Error> {
-    static let shared = SignInAction()
-    
     init() {
         super.init { _, completion in
             Auth.auth().signInAnonymously { result, err in
@@ -57,8 +55,6 @@ class SignInAction: Action<(), User, Error> {
 }
 
 class SignOutAction: Action<(), (), Error> {
-    static let shared = SignOutAction()
-    
     init() {
         super.init { _ in
             do {
@@ -72,8 +68,6 @@ class SignOutAction: Action<(), (), Error> {
 }
 
 class UserAuthStateListener: Action<(), User?, Never> {
-    static let shared = UserAuthStateListener()
-    
     init() {
         super.init { _, completion in
             Auth.auth().addStateDidChangeListener { _, user in

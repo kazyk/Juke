@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		391E256260C9EBF330FE398A /* Pods_JukeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76061F0A7C42AFE5577F6A66 /* Pods_JukeTests.framework */; };
 		6EAA3521268377D600F9735B /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAA3520268377D600F9735B /* Store.swift */; };
+		6EAA35232687036600F9735B /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAA35222687036600F9735B /* Context.swift */; };
 		6EC4DA4726830193009A8A61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EC4DA4626830193009A8A61 /* Assets.xcassets */; };
 		6EC4DA4A26830193009A8A61 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EC4DA4926830193009A8A61 /* Preview Assets.xcassets */; };
 		6EC4DA5526830193009A8A61 /* JukeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC4DA5426830193009A8A61 /* JukeTests.swift */; };
@@ -47,6 +48,7 @@
 		3D87E632CA4D208D12A6DFBA /* Pods-Juke-JukeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juke-JukeUITests.release.xcconfig"; path = "Target Support Files/Pods-Juke-JukeUITests/Pods-Juke-JukeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		41A07F5D3738BCBCC3504103 /* Pods-JukeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JukeTests.debug.xcconfig"; path = "Target Support Files/Pods-JukeTests/Pods-JukeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6EAA3520268377D600F9735B /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		6EAA35222687036600F9735B /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		6EC4DA3F26830192009A8A61 /* Juke.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Juke.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EC4DA4626830193009A8A61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EC4DA4926830193009A8A61 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				6EC4DA9126830250009A8A61 /* UserAutherization.swift */,
 				6EC4DA9326830250009A8A61 /* Action.swift */,
 				6EAA3520268377D600F9735B /* Store.swift */,
+				6EAA35222687036600F9735B /* Context.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				6EAA3521268377D600F9735B /* Store.swift in Sources */,
 				6EC4DAA126830250009A8A61 /* RootView.swift in Sources */,
 				6EC4DA9E26830250009A8A61 /* Action.swift in Sources */,
+				6EAA35232687036600F9735B /* Context.swift in Sources */,
 				6EC4DAA026830250009A8A61 /* LogInView.swift in Sources */,
 				6EC4DA9C26830250009A8A61 /* UserAutherization.swift in Sources */,
 			);

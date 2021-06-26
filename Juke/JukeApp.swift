@@ -10,19 +10,19 @@ import Firebase
 
 @main
 struct JukeApp: App {
-    let userAuthorization = UserAutherization()
+    let context = Context()
     
     init() {
         FirebaseApp.configure()
-        UserAuthStateListener.shared.execute()
+        context.userAuthStateListener.execute()
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(userAuthorization)
-                .environmentObject(SignInAction.shared)
-                .environmentObject(SignOutAction.shared)
+                .environmentObject(context.signInAction)
+                .environmentObject(context.signOutAction)
+                .environmentObject(context.userAuthorization)
         }
     }
 }
