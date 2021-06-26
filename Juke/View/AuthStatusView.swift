@@ -15,33 +15,17 @@ struct AuthStatusView: View {
             Text(user != nil ? "Authorized" : "Not Authorized")
             switch user {
             case nil:
-                SignInButton()
+                ActionButton(actionType: SignInAction.self) { action in
+                    Button("Create User", action: action)
+                }
                 NavigationLink("Log In", destination: LogInView())
             case .some(let user) where user.isAnonymous:
-                SignOutButton()
+                ActionButton(actionType: SignOutAction.self) { action in
+                    Button("Sign Out", action: action)
+                }
             case .some(_):
                 EmptyView()
             }
-        }
-    }
-}
-
-struct SignInButton: View {
-    @EnvironmentObject private var action: SignInAction
-    
-    var body: some View {
-        Button("Create User") {
-            action.execute()
-        }.disabled(action.isExecuting)
-    }
-}
-
-struct SignOutButton: View {
-    @EnvironmentObject private var action: SignOutAction
-    
-    var body: some View {
-        Button("Sign Out") {
-            action.execute()
         }
     }
 }
