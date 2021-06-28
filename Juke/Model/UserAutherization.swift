@@ -78,7 +78,6 @@ class UserAuthStateListener: Service {
             .handleEvents(receiveCancel: {
                 auth.removeStateDidChangeListener(listener)
             })
-            .share()
             .eraseToAnyPublisher()
-    }
+    }.share()
 }
