@@ -15,8 +15,8 @@ struct LibraryStatusView: View {
             Text("Library Access:")
             switch status {
             case .notDetermined:
-                ActionButton(actionType: RequestLibraryAuthorizationAction.self) { action in
-                    Button("Request Access", action: action)
+                ActionButton({$0.requestLibraryAuthorizationAction}) {
+                    Button("Request Access", action: $0)
                 }
             case .denied:
                 Text("Denied")
@@ -33,6 +33,6 @@ struct LibraryStatusView_Previews: PreviewProvider {
             LibraryStatusView(status: .notDetermined)
             LibraryStatusView(status: .denied)
             LibraryStatusView(status: .authorized)
-        }.environmentObject(RequestLibraryAuthorizationAction())
+        }.environmentObject(Context())
     }
 }

@@ -19,13 +19,6 @@ struct JukeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(context.signInAction)
-                .environmentObject(context.signOutAction)
-                .environmentObject(context.requestLibraryAuthorizationAction)
-                .environmentObject(context.createRoomAction)
-                .environmentObject(context.userAuthorization)
-                .environmentObject(context.libraryAuthorization)
-                .environmentObject(context.roomController)
                 .environmentObject(context)
         }
     }

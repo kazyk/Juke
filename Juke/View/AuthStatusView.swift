@@ -15,16 +15,16 @@ struct AuthStatusView: View {
             Text(user != nil ? "Authorized" : "Not Authorized")
             switch user {
             case nil:
-                ActionButton(actionType: SignInAction.self) { executeAction in
+                ActionButton({$0.signInAction}) { executeAction in
                     Button("Create User", action: executeAction)
                 }
                 NavigationLink("Log In", destination: LogInView())
             case .some(let user) where user.isAnonymous:
-                ActionButton(actionType: SignOutAction.self) { executeAction in
+                ActionButton({$0.signOutAction}) { executeAction in
                     Button("Sign Out", action: executeAction)
                 }
             case .some(_):
-                ActionButton(actionType: SignOutAction.self) { executeAction in
+                ActionButton({$0.signOutAction}) { executeAction in
                     Button("Sign Out", action: executeAction)
                 }
             }
@@ -38,7 +38,6 @@ struct AuthStatusView_Previews: PreviewProvider {
             AuthStatusView(user: nil)
             AuthStatusView(user: User(uid: "", isAnonymous: true))
             AuthStatusView(user: User(uid: "", isAnonymous: false))
-        }.environmentObject(SignInAction())
-        .environmentObject(SignOutAction())
+        }.environmentObject(Context())
     }
 }

@@ -14,11 +14,16 @@ struct RoomStatusView: View {
     var body: some View {
         HStack {
             Text("Room:")
-            Text(room?.rid ?? "")
-            if let user = user, room == nil {
-                ActionButton(actionType: CreateRoomAction.self, input: user) {
-                    Button("Create Room", action: $0)
+            if let user = user {
+                if let room = room {
+                    Text(room.rid)
+                } else {
+                    ActionButton({$0.createRoomAction}, input: user) {
+                        Button("Create Room", action: $0)
+                    }
                 }
+            } else {
+                Text("Not authorized")
             }
         }
     }
@@ -26,6 +31,10 @@ struct RoomStatusView: View {
 
 struct RoomStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        RoomStatusView()
+        VStack {
+            RoomStatusView(room: nil, user: nil)
+            RoomStatusView(room: nil, user: User(uid: "", isAnonymous: true))
+            RoomStatusView(room: Room(uid: "", rid: "rid"), user: User(uid: "", isAnonymous: true))
+        }.environmentObject(Context())
     }
 }
