@@ -38,7 +38,7 @@ class UserAutherization: Store<UserAutherization.State> {
 }
 
 
-class SignInAction: Action<(), User, Error> {
+class SignInAction: ActionBase<(), User, Error> {
     init() {
         super.init { _, completion in
             Auth.auth().signInAnonymously { result, err in
@@ -54,7 +54,7 @@ class SignInAction: Action<(), User, Error> {
     }
 }
 
-class SignOutAction: Action<(), (), Error> {
+class SignOutAction: ActionBase<(), (), Error> {
     init() {
         super.init { _ in
             do {

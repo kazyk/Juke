@@ -12,9 +12,11 @@ class Context: ObservableObject {
     let signOutAction = SignOutAction()
     let requestLibraryAuthorizationAction = RequestLibraryAuthorizationAction()
     let createRoomAction = CreateRoomAction()
+    let saveRoomIdAction = SaveRoomIdAction()
     
     let userAuthStateListener = UserAuthStateListener()
     let libraryAuthorizationStatus = LibraryAuthorizationStatus()
+    let loadRoomIdService = LoadRoomIdService()
     
     private(set) lazy var userAuthorization = UserAutherization(context: self)
     private(set) lazy var libraryAuthorization = LibraryAuthorization(context: self)

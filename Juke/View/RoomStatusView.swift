@@ -34,7 +34,7 @@ struct RoomStatusView_Previews: PreviewProvider {
         VStack {
             RoomStatusView(room: nil, user: nil)
             RoomStatusView(room: nil, user: User(uid: "", isAnonymous: true))
-            RoomStatusView(room: Room(uid: "", rid: "rid"), user: User(uid: "", isAnonymous: true))
+            RoomStatusView(room: Room(rid: "rid"), user: User(uid: "", isAnonymous: true))
         }.environmentObject(Context())
     }
 }

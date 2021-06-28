@@ -42,7 +42,7 @@ final class LibraryAuthorization: Store<LibraryAuthorization.State> {
     }
 }
 
-final class RequestLibraryAuthorizationAction: Action<(), LibraryAuthorization.Status, Error> {
+final class RequestLibraryAuthorizationAction: ActionBase<(), LibraryAuthorization.Status, Error> {
     init() {
         super.init { _, completion in
             MPMediaLibrary.requestAuthorization { status in

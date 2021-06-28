@@ -8,12 +8,15 @@
 import Foundation
 import Combine
 
-protocol ActionType {
+protocol Action {
+    associatedtype Input
     associatedtype Success
+    var isExecuting: Bool { get }
     var success: AnyPublisher<Success, Never> { get }
+    func execute(input: Input)
 }
 
-class Action<Input, Success, Failure: Error>: ObservableObject, ActionType {
+class ActionBase<Input, Success, Failure: Error>: ObservableObject, Action {
     @Published private(set) var isExecuting = false
     private let successSubject = PassthroughSubject<Success, Never>()
     private let errorSubject = PassthroughSubject<Failure, Never>()

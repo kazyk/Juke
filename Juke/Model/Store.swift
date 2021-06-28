@@ -8,16 +8,17 @@
 import Foundation
 import Combine
 
-class Store<T>: ObservableObject {
-    @Published private(set) var state: T
+class Store<State>: ObservableObject {
+    @Published private(set) var state: State
     
     private var sub = [AnyCancellable]()
     
-    init(_ state: T) {
+    init(_ state: State) {
         self.state = state
     }
     
-    func watch<A: ActionType>(_ action: A, handler: @escaping (inout T, A.Success) -> Void) {
+    // Watch successful results of action and update state
+    func watch<A: Action>(_ action: A, handler: @escaping (inout State, A.Success) -> Void) {
         action.success.sink { [weak self] value in
             guard let self = self else {
                 return
@@ -26,7 +27,8 @@ class Store<T>: ObservableObject {
         }.store(in: &sub)
     }
     
-    func watch<S: Service>(_ service: S, handler: @escaping (inout T, S.Publisher.Output) -> Void) {
+    // Watch successful values of service and update state
+    func watch<S: Service>(_ service: S, handler: @escaping (inout State, S.Publisher.Output) -> Void) {
         service.publisher
             .sink { [weak self] value in
                 guard let self = self else {
@@ -34,5 +36,25 @@ class Store<T>: ObservableObject {
                 }
                 handler(&self.state, value)
             }.store(in: &sub)
+    }
+    
+    enum EffectTrigger<T: Equatable> {
+        case execute(T), noop
+    }
+    
+    // Trigger side effect by state change
+    func effect<A: Action>(action: A, when condition: @escaping (State) -> EffectTrigger<A.Input>) {
+        var prevValue: A.Input?
+        $state.sink { state in
+            switch condition(state) {
+            case .execute(let t):
+                if prevValue != t {
+                    action.execute(input: t)
+                }
+                prevValue = t
+            case .noop:
+                prevValue = nil
+            }
+        }.store(in: &sub)
     }
 }

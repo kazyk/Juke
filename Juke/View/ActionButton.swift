@@ -7,31 +7,39 @@
 
 import SwiftUI
 
-struct ActionButton<I, S, F, A: Action<I, S, F>, V: View>: View {
+struct ActionButton<A: Action & ObservableObject, V: View>: View {
     @EnvironmentObject private var context: Context
     
     var action: (Context) -> A
-    var input: I
+    var input: A.Input
     var view: (_ executeAction: @escaping () -> Void) -> V
     
-    init(_ action: @escaping (Context) -> A, input: I, view: @escaping (@escaping () -> Void) -> V) {
+    init(_ action: @escaping (Context) -> A, input: A.Input, view: @escaping (@escaping () -> Void) -> V) {
         self.action = action
         self.input = input
         self.view = view
     }
     
     var body: some View {
-        let a = action(context)
-        view {
-            a.execute(input: input)
-        }.disabled(a.isExecuting)
+        ActionButtonInner(action: action(context), input: input, view: view)
     }
 }
 
-extension ActionButton where I == Void {
+extension ActionButton where A.Input == Void {
     init(_ action: @escaping (Context) -> A, view: @escaping (@escaping () -> Void) -> V) {
         self.action = action
         self.view = view
     }
 }
 
+struct ActionButtonInner<A: Action & ObservableObject, V: View>: View {
+    @ObservedObject var action: A
+    var input: A.Input
+    var view: (_ executeAction: @escaping () -> Void) -> V
+    
+    var body: some View {
+        view {
+            action.execute(input: input)
+        }.disabled(action.isExecuting)
+    }
+}
