@@ -22,8 +22,11 @@ struct JukeApp: App {
                 .environmentObject(context.signInAction)
                 .environmentObject(context.signOutAction)
                 .environmentObject(context.requestLibraryAuthorizationAction)
+                .environmentObject(context.createRoomAction)
                 .environmentObject(context.userAuthorization)
                 .environmentObject(context.libraryAuthorization)
+                .environmentObject(context.roomController)
+                .environmentObject(context)
         }
     }
 }

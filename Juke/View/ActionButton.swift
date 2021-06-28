@@ -12,7 +12,7 @@ struct ActionButton<I, S, F, A: Action<I, S, F>, V: View>: View {
     
     var actionType: A.Type
     var input: I
-    var view: (_ action: @escaping () -> Void) -> V
+    var view: (_ executeAction: @escaping () -> Void) -> V
     
     var body: some View {
         view {
@@ -22,7 +22,7 @@ struct ActionButton<I, S, F, A: Action<I, S, F>, V: View>: View {
 }
 
 extension ActionButton where I == Void {
-    init(actionType: A.Type, view: @escaping (_ action: @escaping () -> Void) -> V) {
+    init(actionType: A.Type, view: @escaping (_ executeAction: @escaping () -> Void) -> V) {
         self.actionType = actionType
         self.view = view
     }

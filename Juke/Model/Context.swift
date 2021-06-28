@@ -7,14 +7,16 @@
 
 import Foundation
 
-class Context {
+class Context: ObservableObject {
     let signInAction = SignInAction()
     let signOutAction = SignOutAction()
     let requestLibraryAuthorizationAction = RequestLibraryAuthorizationAction()
+    let createRoomAction = CreateRoomAction()
     
     let userAuthStateListener = UserAuthStateListener()
     let libraryAuthorizationStatus = LibraryAuthorizationStatus()
     
     private(set) lazy var userAuthorization = UserAutherization(context: self)
     private(set) lazy var libraryAuthorization = LibraryAuthorization(context: self)
+    private(set) lazy var roomController = RoomController(context: self)
 }
