@@ -17,10 +17,8 @@ struct RootView: View {
                 StoreView({$0.libraryAuthorization}) { state in
                     LibraryStatusView(status: state.status)
                 }
-                StoreView({$0.roomController}) { roomState in
-                    StoreView({$0.userAuthorization}) { userState in
-                        RoomStatusView(room: roomState.room, user: userState.user)
-                    }
+                StoreView2({($0.roomController, $0.userAuthorization)}) { roomState, userState in
+                    RoomStatusView(room: roomState.room, user: userState.user)
                 }
             }
         }
