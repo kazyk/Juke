@@ -13,6 +13,7 @@ class Context: ObservableObject {
     let requestLibraryAuthorizationAction = RequestLibraryAuthorizationAction()
     let createRoomAction = CreateRoomAction()
     let saveRoomIdAction = SaveRoomIdAction()
+    let leaveRoomAction = LeaveRoomAction()
     
     let userAuthStateListener = UserAuthStateListener()
     let libraryAuthorizationStatus = LibraryAuthorizationStatus()

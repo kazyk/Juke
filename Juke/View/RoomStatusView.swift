@@ -17,6 +17,9 @@ struct RoomStatusView: View {
             if let user = user {
                 if let room = room {
                     Text(room.rid)
+                    ActionButton({$0.leaveRoomAction}) {
+                        Button("Leave Room", action: $0)
+                    }
                 } else {
                     ActionButton({$0.createRoomAction}, input: user) {
                         Button("Create Room", action: $0)

@@ -16,6 +16,7 @@ struct Room {
 final class RoomController: Store<RoomController.State> {
     struct State {
         var room: Room?
+        var isConnected = false
     }
     
     init(context: Context) {
@@ -23,11 +24,16 @@ final class RoomController: Store<RoomController.State> {
         
         watch(context.createRoomAction) { state, room in
             state.room = room
+            state.isConnected = true
         }
         watch(context.loadRoomIdService) { state, roomid in
             if let roomid = roomid {
                 state.room = Room(rid: roomid)
             }
+        }
+        watch(context.leaveRoomAction) { state, _ in
+            state.room = nil
+            state.isConnected = false
         }
         effect(action: context.saveRoomIdAction) { state in
             if let room = state.room {
@@ -54,6 +60,14 @@ final class CreateRoomAction: ActionBase<User, Room, Error> {
                         completion(.success(Room(rid: doc.documentID)))
                     }
                 })
+        }
+    }
+}
+
+final class LeaveRoomAction: ActionBase<(), (), Error> {
+    init() {
+        super.init { _, completion in
+            completion(.success(()))
         }
     }
 }
