@@ -35,12 +35,6 @@ final class RoomController: Store<RoomController.State> {
             state.room = nil
             state.isConnected = false
         }
-        effect(action: context.saveRoomIdAction) { state in
-            if let room = state.room {
-                return .execute(room.rid)
-            }
-            return .noop
-        }
     }
 }
 
@@ -57,6 +51,7 @@ final class CreateRoomAction: ActionBase<User, Room, Error> {
                     if let err = err {
                         completion(.failure(err))
                     } else {
+                        UserDefaults.standard.setValue(doc.documentID, forKey: "roomid")
                         completion(.success(Room(rid: doc.documentID)))
                     }
                 })
@@ -74,15 +69,19 @@ final class LeaveRoomAction: ActionBase<(), (), Error> {
 
 final class LoadRoomIdService: Service {
     let publisher = Deferred {
-        return Just(UserDefaults.standard.string(forKey: "roomid"))
-    }
-}
-
-final class SaveRoomIdAction: ActionBase<String, (), Error> {
-    init() {
-        super.init { roomId in
-            UserDefaults.standard.setValue(roomId, forKey: "roomid")
-            return .success(())
+        Future<String?, Never> { resolve in
+            guard let rid = UserDefaults.standard.string(forKey: "roomid") else {
+                resolve(.success(nil))
+                return
+            }
+            let doc = Firestore.firestore().collection("rooms").document(rid)
+            doc.getDocument(source: .server) { snapshot, err in
+                if let snapshot = snapshot {
+                    resolve(.success(rid))
+                } else {
+                    resolve(.success(nil))
+                }
+            }
         }
     }
 }
